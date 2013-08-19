@@ -17,3 +17,7 @@ bin/
 cache/
 gems/
 specifications/
+
+# After rake install
+sass/
+source/
