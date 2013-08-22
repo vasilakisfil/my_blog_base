@@ -21,3 +21,6 @@ specifications/
 # After rake install
 sass/
 source/
+
+#Ignore new themes
+.themes/custom_foxslide/
