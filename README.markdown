@@ -41,10 +41,10 @@ $ vim .gitignore #edit the last line and add your theme name
 $ git clone theme_repo .themes/theme_repo
 $ git clone posts_repo source
 $ rake install["theme_repo"] # you may need to add noglob before rake command if you use zsh
-$ #creates_posts/xxxx-xx-xx-new-post.markdown and
-$ #creates images/post/images/xxxx-xx-xx-new-post folder to hold images
+ #creates_posts/xxxx-xx-xx-new-post.markdown and
+ #creates images/post/images/xxxx-xx-xx-new-post folder to hold images
 $ rake new_post["new_post"]
-$ #edit your post and add images
+ #edit your post and add images
 $ rake generate
 $ rake preview
 ```
