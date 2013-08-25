@@ -23,6 +23,8 @@ deploy_dir      = "_deploy"   # deploy directory (for Github pages deployment)
 stash_dir       = "_stash"    # directory to stash posts for speedy generation
 posts_dir       = "_posts"    # directory for blog files
 themes_dir      = ".themes"   # directory for blog files
+images_dir      = "images"    # directory for blog common images
+post_images_dir = "post_images" #directory for post specific images
 new_post_ext    = "markdown"  # default new post file extension when using the new_post task
 new_page_ext    = "markdown"  # default new page file extension when using the new_page task
 server_port     = "4000"      # port for preview server eg. localhost:4000
@@ -112,6 +114,15 @@ task :new_post, :title do |t, args|
     post.puts "comments: true"
     post.puts "categories: "
     post.puts "---"
+  end
+  
+  puts "Creating the image folder in images/post_images/ folder"
+  images_filename = "#{Time.now.strftime('%Y-%m-%d')}-#{title.to_url}"
+  mkdir_p "#{source_dir}/#{images_dir}/#{post_images_dir}/#{images_filename}"
+  puts "(Added image folder in post as comments for ease of use)"
+  open(filename, 'a') do |post|
+    post.puts
+    post.puts "<!-- for images path: /#{images_dir}/#{post_images_dir}/#{images_filename} -->"
   end
 end
 
