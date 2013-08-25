@@ -33,6 +33,8 @@ Yeah I know, a bit complicated but now 2 things happen:
 
 
 ## How to install
+
+```
 $ git clone https://github.com/vasilakisfil/my_blog_base.git
 $ bundle install
 $ vim .gitignore #edit the last line and add your theme name
@@ -45,6 +47,7 @@ $ rake new_post["new_post"]
 $ #edit your post and add images
 $ rake generate
 $ rake preview
+```
 
 ##  Tips
 If you are using this configuration for the first time, then in for your posts repo, in an empty folder just hit git init and add these in your .gitignore file:
