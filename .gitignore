@@ -13,14 +13,13 @@ vendor
 node_modules
 
 # After bundle install
-bin/
 cache/
 gems/
 specifications/
 
-# After rake install
+# After theme installation
 sass/
 source/
 
-#Ignore new themes
+# Ignore new themes (add your theme repo name here)
 .themes/custom_foxslide/
