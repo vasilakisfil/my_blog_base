@@ -22,4 +22,4 @@ sass/
 source/
 
 # Ignore new themes (add your theme repo name here)
-.themes/custom_foxslide/
+.themes/my_blog_theme/

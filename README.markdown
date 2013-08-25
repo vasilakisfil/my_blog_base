@@ -1,38 +1,75 @@
-## What is Octopress?
+## What is Octopress
+An amazing blogging platform. See more at: [Octopress.org](http://octopress.org)
 
-Octopress is [Jekyll](https://github.com/mojombo/jekyll) blogging at its finest.
+## What is Modified Octopress
+After trying Wordpress "I wanna do everything" which was way too complex for simple things and Tumblr "I wanna be professional" which contained numerous bugs and ended up in a semi-porn site, I wanted to try something more simple. I landed up in Octopress and haven't regreted since then.
 
-1. **Octopress sports a clean responsive theme** written in semantic HTML5, focused on readability and friendliness toward mobile devices.
-2. **Code blogging is easy and beautiful.** Embed code (with [Solarized](http://ethanschoonover.com/solarized) styling) in your posts from gists, jsFiddle or from your filesystem.
-3. **Third party integration is simple** with built-in support for Pinboard, Delicious, GitHub Repositories, Disqus Comments and Google Analytics.
-4. **It's easy to use.** A collection of rake tasks simplifies development and makes deploying a cinch.
-5. **Ships with great plug-ins** some original and others from the Jekyll community &mdash; tested and improved.
+So Modified Octopress is exactly Octopress with some improvements/adjustements I made to make my life easier.
 
+## How much modified is this version of Octopress?
+Well not much. The only but important thing that I wanted to do was to completely serparate content from presentation. Using Octopress this can't be achieved entierely. However what I did is to have 3 different repositories:
 
-## Documentation
-
-Check out [Octopress.org](http://octopress.org/docs) for guides and documentation.
-
-
-## Contributing
-
-[![Build Status](https://travis-ci.org/imathis/octopress.png?branch=master)](https://travis-ci.org/imathis/octopress)
-
-We love to see people contributing to Octopress, whether it's a bug report, feature suggestion or a pull request. At the moment, we try to keep the core slick and lean, focusing on basic blogging needs, so some of your suggestions might not find their way into Octopress. For those ideas, we started a [list of 3rd party plug-ins](https://github.com/imathis/octopress/wiki/3rd-party-plugins), where you can link your own Octopress plug-in repositories. For the future, we're thinking about ways to easier add them them into our main releases.
+1. The Octopress platform (my_blog_base):
+    - This repository holds the main Octopress files.
+2. My Octopress theme (my_blog_theme):
+    - This repo holds the presentation files
+3. My Markdown Posts
 
 
-## License
-(The MIT License)
+After trying git submodules, fake submodules I ended up doing this:
 
-Copyright © 2009-2013 Brandon Mathis
-
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the ‘Software’), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED ‘AS IS’, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+1. I added in .gitignore of repo1 the location or repo2 and repo3.
+2. Then I created the 2 others repo and update them asychronously from times to times.
 
 
-#### If you want to be awesome.
-- Proudly display the 'Powered by Octopress' credit in the footer.
-- Add your site to the Wiki so we can watch the community grow.
+The only problem was that I wanted my markdown posts to be TOTALLY platform agnostic. So I modified the Rakefile of Octopress to create a new folder in source/images/post_images/ folder with the date-name of the post in order to store any image I may need there.
+
+Due to the strange nature of Jekyll/Octopress when you install a theme all the theme's files in .theme/your_theme are copied in source/ folder. So (among others) I appended the 2 unecessary folders of theme .gitignore, that is, source/ and sass/. Now in the source folder I create a new repo that ignores ALL folders except _posts/ and images/post_images/.
+
+Yeah I know, a bit complicated but now 2 things happen:
+
+1. I don't re-add unecessary files in my repo such as source/ and sass/ as most people do. These files are in your theme and are copied in these folders when you hit rake install["your_theme"].
+2. If for some reason tomorrow I want to leave behind Octopress I have my posts with their images in an external repo and I can do them anything I want :)
+
+
+## How to install
+    git clone https://github.com/vasilakisfil/my_blog_base.git
+    bundle install
+    vim .gitignore #edit the last line and add your theme name
+    git clone theme_repo .themes/theme_repo
+    git clone posts_repo source
+    rake install["theme_repo"] # you may need to add noglob before rake command if you use zsh
+    #creates_posts/xxxx-xx-xx-new-post.markdown and
+    #creates images/post/images/xxxx-xx-xx-new-post folder to hold images
+    rake new_post["new_post"]
+    #edit your post and add images
+    rake generate
+    rake preview
+    
+    
+##  Tips
+If you are using this configuration for the first time, then in for your posts repo, in an empty folder just hit git init and add these in your .gitignore file:
+
+    _includes/
+    _layouts/
+    !_posts/
+    assets/
+    atom.xml
+    blog/
+    crossdomain.xml
+    favicon.png # depends on the theme
+    humans.txt
+    images/*
+    !images/post_images/
+    index.html
+    javascripts/
+    robots.txt
+    stylesheets/
+
+Then do exactly as said above and when you create a new post, inside source/ folder git status will pinpoint to you to add _source/_posts and source/images/ folders.
+
+Also since in Markdown there are no variables I modified Rakefile to add you in the first line of your post this:
+
+    <!-- for images path: /images/post_images/xxxx-xx-xx-new-post -->
+    
+so that you can copy/paste it when you want to add a new image path.
