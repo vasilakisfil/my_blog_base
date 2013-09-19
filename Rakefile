@@ -24,6 +24,7 @@ stash_dir       = "_stash"    # directory to stash posts for speedy generation
 posts_dir       = "_posts"    # directory for blog files
 themes_dir      = ".themes"   # directory for blog files
 images_dir      = "images"    # directory for blog common images
+other_files_dir = "other_files" #firectory for post specific files (mainly .txt files)
 post_images_dir = "post_images" #directory for post specific images
 new_post_ext    = "markdown"  # default new post file extension when using the new_post task
 new_page_ext    = "markdown"  # default new page file extension when using the new_page task
@@ -119,11 +120,20 @@ task :new_post, :title do |t, args|
   puts "Creating the image folder in images/post_images/ folder"
   images_filename = "#{Time.now.strftime('%Y-%m-%d')}-#{title.to_url}"
   mkdir_p "#{source_dir}/#{images_dir}/#{post_images_dir}/#{images_filename}"
-  puts "(Added image folder in post as comments for ease of use)"
   open(filename, 'a') do |post|
     post.puts
     post.puts "<!-- for images path: /#{images_dir}/#{post_images_dir}/#{images_filename} -->"
   end
+  puts "(Added image folder in post as comments for ease of use)"
+
+  puts "Creating the other_files folder in other_files/ folder"
+  other_files_filename = "#{Time.now.strftime('%Y-%m-%d')}-#{title.to_url}"
+  mkdir_p "#{source_dir}/#{other_files_dir}/#{other_files_filename}"
+  open(filename, 'a') do |post|
+    post.puts
+    post.puts "<!-- for other_files path: /#{other_files_dir}/#{other_files_filename} -->"
+  end
+  puts "(Added other_files' post specific folder directory  as comments for ease of use)"
 end
 
 # usage rake new_page[my-new-page] or rake new_page[my-new-page.html] or rake new_page (defaults to "new-page.markdown")
