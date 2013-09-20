@@ -2,12 +2,18 @@
 An amazing blogging platform. See more at: [Octopress.org](http://octopress.org)
 
 ## What is Modified Octopress
-After trying Wordpress "I wanna do everything" which was way too complex for simple things and Tumblr "I wanna be professional" which contained numerous bugs and ended up in a semi-porn site, I wanted to try something more simple. I landed up in Octopress and haven't regreted since then.
+After trying Wordpress "I wanna do everything" which was way too complex for simple
+things and Tumblr "I wanna be professional" which contained numerous bugs and ended
+up in a semi-porn site, I wanted to try something more simple. I landed up in
+Octopress and haven't regreted since then.
 
-So Modified Octopress is exactly Octopress with some improvements/adjustements I made to make my life easier.
+So Modified Octopress is exactly Octopress with some improvements/adjustements
+I made to make my life easier.
 
 ## How much modified is this version of Octopress?
-Well not much. The only but important thing that I wanted to do was to completely serparate content from presentation. Using Octopress this can't be achieved entierely. However what I did is to have 3 different repositories:
+Well not much. The only but important thing that I wanted to do was to completely
+serparate content from presentation. Using Octopress this can't be achieved entierely.
+However what I did is to have 3 different repositories:
 
 1. The Octopress platform (my_blog_base):
     - This repository holds the main Octopress files.
@@ -22,14 +28,28 @@ After trying git submodules, fake submodules I ended up doing this:
 2. Then I created the 2 others repo and update them asychronously from times to times.
 
 
-The only problem was that I wanted my markdown posts to be TOTALLY platform agnostic. So I modified the Rakefile of Octopress to create a new folder in source/images/post_images/ folder with the date-name of the post in order to store any image I may need there.
+The only problem was that I wanted my markdown posts to be TOTALLY platform agnostic.
+So I modified the Rakefile of Octopress to create a new folder in source/images/post_images/
+folder with the date-name of the post in order to store any image I may need there.
 
-Due to the strange nature of Jekyll/Octopress when you install a theme all the theme's files in .theme/your_theme are copied in source/ folder. So (among others) I appended the 2 unecessary folders of theme .gitignore, that is, source/ and sass/. Now in the source folder I create a new repo that ignores ALL folders except _posts/ and images/post_images/.
+Also I added one more folder: source/other_files and created other_files plugin in order
+to upload.. well any other file that I might need in a post. When you create a new post,
+as in the case of images, rake auto creates a post specific folder with the post's name
+as the folder name.
+
+Due to the strange nature of Jekyll/Octopress when you install a theme all the theme's
+files in .theme/your_theme are copied in source/ folder. So (among others) I appended
+the 2 unecessary folders of theme .gitignore, that is, source/ and sass/. Now in the
+source folder I create a new repo that ignores ALL
+folders except _posts/, images/post_images/ and source/other_files.
 
 Yeah I know, a bit complicated but now 2 things happen:
 
-1. I don't re-add unecessary files in my repo such as source/ and sass/ as most people do. These files are in your theme and are copied in these folders when you hit rake install["your_theme"].
-2. If for some reason tomorrow I want to leave behind Octopress I have my posts with their images in an external repo and I can do them anything I want :)
+1. I don't re-add unecessary files in my repo such as source/ and sass/ as most people do.
+These files are in your theme and are copied in these folders when you hit
+rake install["your_theme"].
+2. If for some reason tomorrow I want to leave behind Octopress I have my posts
+with their images in an external repo and I can do them anything I want :)
 
 
 ## How to install
@@ -50,7 +70,8 @@ $ rake preview
 ```
 
 ##  Tips
-If you are using this configuration for the first time, then in for your posts repo, in an empty folder just hit git init and add these in your .gitignore file:
+If you are using this configuration for the first time, then in for your posts repo,
+in an empty folder just hit git init and add these in your .gitignore file:
 
     _includes/
     _layouts/
@@ -68,10 +89,12 @@ If you are using this configuration for the first time, then in for your posts r
     robots.txt
     stylesheets/
 
-Then do exactly as said above and when you create a new post, inside source/ folder git status will pinpoint to you to add _source/_posts and source/images/ folders.
+Then do exactly as said above and when you create a new post, inside source/
+folder git status will pinpoint to you to add _source/_posts and source/images/ folders.
 
-Also since in Markdown there are no variables I modified Rakefile to add you in the first line of your post this:
+Also since in Markdown there are no variables I modified Rakefile to add you
+in the first line of your post this:
 
     <!-- for images path: /images/post_images/xxxx-xx-xx-new-post -->
-    
+
 so that you can copy/paste it when you want to add a new image path.
