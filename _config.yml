@@ -95,7 +95,7 @@ disqus_short_name: blog-fil-vasilak-is
 disqus_show_comment_count: true
 
 # Google Analytics
-google_analytics_tracking_id:
+google_analytics_tracking_id: UA-44681025-2
 
 # Facebook Like
 facebook_like: false
