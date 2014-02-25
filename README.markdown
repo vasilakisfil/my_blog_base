@@ -98,3 +98,11 @@ in the first line of your post this:
     <!-- for images path: /images/post_images/xxxx-xx-xx-new-post -->
 
 so that you can copy/paste it when you want to add a new image path.
+
+### Dual Screen Support ###
+If you want dual screen support then you have to edit the file /usr/local/bin/guake and in
+912 (window_rect.y = 0) add the following:
+
+    window_rect.y = screen.get_monitor_geometry(0)[1]
+    window_rect.x = 0
+
